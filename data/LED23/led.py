@@ -68,18 +68,30 @@
 
 
 import os
+from rdflib import Graph
+# See RDFLIB https://rdflib.readthedocs.io/en/stable/intro_to_parsing.html
 
-
-def get_entities_and_relations(nt_file):
+def get_entities_and_relations(file):
     entities = set()
     relations = set()
-    with open(nt_file, 'r') as f:
-        for line in f:
-            subject, relation, object_ = line.strip().split()
-            entities.add(subject)
-            entities.add(object_)
-            relations.add(relation)
+    g = Graph()
+    g.parse(file)
+    for subj, pred, obj in g:
+        entities.add(subj)
+        entities.add(obj)
+        relations.add(pred)
     return entities, relations
+
+# def get_entities_and_relations(nt_file):
+#     entities = set()
+#     relations = set()
+#     with open(nt_file, 'r') as f:
+#         for line in f:
+#             subject, relation, object_ = line.strip().split()
+#             entities.add(subject)
+#             entities.add(object_)
+#             relations.add(relation)
+#     return entities, relations
 
 
 def write_to_file(file_name, data):
