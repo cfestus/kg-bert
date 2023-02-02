@@ -1,78 +1,83 @@
-<http://data.open.ac.uk/edtf/ontology/dayOfMonth>
-<http://purl.org/dc/terms/subject>
-<http://led.kmi.open.ac.uk/term/has_social_status>
-<http://purl.org/ontology/bibo/issue>
-<http://led.kmi.open.ac.uk/term/meta/initial_graph>
-<http://led.kmi.open.ac.uk/term/pages>
-<http://purl.org/ontology/bibo/place>
-<http://purl.org/ontology/bibo/translator>
-<http://purl.org/ontology/mo/genre>
-<http://xmlns.com/foaf/0.1/gender>
-<http://www.w3.org/2006/time#hasDurationDescription>
-<http://www.w3.org/2000/01/rdf-schema#comment>
-<http://led.kmi.open.ac.uk/term/hasSourceType>
-<http://purl.org/dc/terms/title>
-<http://purl.org/dc/terms/language>
-<http://www.w3.org/2004/02/skos/core#prefLabel>
-<http://www.opengis.net/ont/geosparql#sfIntersects>
-<http://purl.org/dc/terms/isPartOf>
-<http://purl.org/ontology/bibo/volume>
-<http://purl.org/ontology/bibo/uri>
-<http://xmlns.com/foaf/0.1/familyName>
-<http://purl.org/ontology/mo/instrument>
-<http://www.co-ode.org/roberts/upper.owl#has_initial_physical_location>
-<http://led.kmi.open.ac.uk/term/has_environment>
-<http://purl.org/ontology/bibo/status>
-<http://schema.org/birthPlace>
-<http://purl.org/ontology/mo/composer>
-<http://purl.org/NET/c4dm/event.owl#agent>
-<http://purl.org/dc/terms/dateApproved>
-<http://xmlns.com/foaf/0.1/title>
-<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
-<http://www.w3.org/2006/time#hours>
-<http://schema.org/author>
-<http://data.open.ac.uk/edtf/ontology/yearOfCentury>
-<http://purl.org/dc/terms/issued>
-<http://dbpedia.org/ontology/religion>
-<http://xmlns.com/foaf/0.1/nick>
-<http://purl.org/ontology/bibo/isbn>
-<http://purl.org/ontology/bibo/number>
-<http://purl.org/dc/terms/publisher>
-<http://led.kmi.open.ac.uk/term/has_medium>
-<http://data.open.ac.uk/edtf/ontology/year>
-<http://led.kmi.open.ac.uk/term/in_collection>
-<http://data.open.ac.uk/edtf/ontology/timeOfDay>
-<http://data.open.ac.uk/edtf/ontology/century>
-<http://www.w3.org/2006/time#minutes>
-<http://led.kmi.open.ac.uk/term/meta/acknowledgement>
-<http://schema.org/deathDate>
-<http://www.w3.org/2002/07/owl#sameAs>
-<http://dbpedia.org/ontology/occupation>
-<http://www.w3.org/2004/02/skos/core#altLabel>
-<http://purl.org/ontology/bibo/pages>
-<http://dbpedia.org/ontology/writer>
-<http://www.w3.org/2006/time#hasBeginning>
-<http://www.w3.org/2006/time#hasEnd>
-<http://purl.org/dc/terms/dateSubmitted>
-<http://xmlns.com/foaf/0.1/page>
-<http://schema.org/nationality>
-<http://purl.org/dc/terms/description>
-<http://purl.org/ontology/mo/performer>
-<http://xmlns.com/foaf/0.1/name>
-<http://purl.org/ontology/mo/listener>
-<http://www.w3.org/1999/02/22-rdf-syntax-ns#value>
-<http://led.kmi.open.ac.uk/term/is_reported_in>
-<http://schema.org/deathPlace>
-<http://purl.org/NET/c4dm/event.owl#place>
-<http://purl.org/ontology/mo/performance_of>
-<http://led.kmi.open.ac.uk/term/has_evidence_text>
-<http://www.co-ode.org/roberts/upper.owl#has_final_physical_location>
-<http://led.kmi.open.ac.uk/term/pages_manuscript>
-<http://schema.org/birthDate>
-<http://purl.org/dc/terms/isReferencedBy>
-<http://purl.org/dc/terms/date>
-<http://www.w3.org/2000/01/rdf-schema#label>
-<http://data.open.ac.uk/edtf/ontology/monthOfYear>
-<http://purl.org/NET/c4dm/event.owl#time>
-<http://xmlns.com/foaf/0.1/givenName>
-<http://purl.org/ontology/bibo/editor>
+http://purl.org/dc/terms/isPartOf	http://data.open.ac.uk/led/source/Music+and+manners;+personal+reminiscences+and+sketches+of+character/1444077559572
+http://www.w3.org/2000/01/rdf-schema#label	1666
+http://led.kmi.open.ac.uk/term/has_environment	http://led.kmi.open.ac.uk/term/ListeningEnvironment.Public
+http://purl.org/ontology/mo/genre	http://dbpedia.org/resource/20th-century_classical_music
+http://purl.org/dc/terms/dateSubmitted	2018-07-08T13:30:05+00:00
+http://purl.org/ontology/mo/performance_of	http://data.open.ac.uk/led/music/Don+Juan/1388520117382
+http://led.kmi.open.ac.uk/term/has_medium	http://led.kmi.open.ac.uk/term/Medium.Live
+http://led.kmi.open.ac.uk/term/is_reported_in	http://data.open.ac.uk/led/source/Joys+and+Sorrows.+Reflections+by+Pablo+Casals,+as+told+by+Albert+E.+Kahn/1424555066384
+http://purl.org/dc/terms/title	La Messe des pauvres
+http://xmlns.com/foaf/0.1/page	http://data.open.ac.uk/led/source/946bfb0d0f5085ae39d8dc16dde95325/excerpt/2c8b95d8669413777c1c1ed81a653566
+http://xmlns.com/foaf/0.1/gender	male
+http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://purl.org/ontology/mo/Performance
+http://purl.org/dc/terms/subject	http://data.open.ac.uk/led/performance/http://data.open.ac.uk/led/music/Sept+Ha%25C3%25AFka%25C3%25AF/1435835234079/1435835234091
+http://www.w3.org/1999/02/22-rdf-syntax-ns#value	<p>Rev. Mr. Brock (Baptist) is the minister of Bloomsbury chapel, Bloomsbury street. He is a very popular preacher, and has a large and flourishing congregation. Not indeed like the great German congregations where we often see two or three thousand people assembled on a Sabbath mornings but there were not less, we think, than a thousand persons present at the Bloomsbury chapel last Sunday. The church is furnished with a very good-sized organ, though its tones are harsh, and especially so are the stops of small pipes, as mixture or cornet. There is no choir, but the singing is by the people, and seems to be very general. There was a chorus of many voices; a chorus not of musical attraction, but of religious edification - excellent and appropriate. Chanting had been introduced into this congregation, and is practised by the whole collected assembly with much success. We do not hesitate to say that the chanting by all the people in Rev. Mr. Brock's church is much superior to any of the cathedral choir chanting which we have heard. The chant itself was, indeed, unfavorable to the best results, being the well-known Dr. Dupuis in A; but notwithstanding the tune-like character of the chant, the effect was truly good, and seemed to furnish a most satisfactory answer to those objectors to chanting, who say that it is impossible for a large congregation to chant together. The words were, in general, deliberately and well delivered, and with a good degree of simultaneousness on the part of the congregation. Chanting is practised in public worship in many dissenting churches in London, and in other parts of the kingdom. Indeed, although it was introduced at an earlier period into our New England churches than here, yet it seems to have spread more here, and to have taken deeper root. One reason for this may be, that here it is made a republican thing; it is in the hands of the people, and they like it. The metrical psalms were also quite well sung, and the great importance of an organ in Congregational singing was made very apparent. A custom in giving out the hymn and tune is singular. The minister first gives out the number of the hymn, and immediately afterwards the organist plays over the tune. After this the minister, who stands in the pulpit during the playing, reads the hymn, and then the singing follows. </p>
+<p>Mr. Brock has made a much-needed reform in relation to the public prayer. He has broken up the ever-so-long prayer, and instead of it has two shorter prayers. Rev. Mr. Binney of the Weigh House chapel has done the same. The devotional exercises occupied an hour, and the sermon that followed about forty minutes, after which the meeting was dismissed by the usual benediction. </p>
+http://led.kmi.open.ac.uk/term/has_evidence_text	Dearest Lenny
+Yesterday I had the enormous pleasure of hearing you conduct at Tanglewood.  You were simply wonderful.  I felt so proud of you.  I made a darting trip up to “welcome” you back along with the enthusiastic thousands to whom you bring inspiration and joy and so much of your innermost being.  Unfortunately I had to rush back and didn’t have the opportunity to rush back stage, see those eyes wide open very wide with delight and give you a great hug.  I do so now.
+You were simply magnificent.  The Haydn Mass in Bb was so joyous I was ready to embrace the church, something I am sue would horrify you.  I heard the chorus rehearsing as I came on the grounds, only one half hour before the performance!  I thought: just like Lenny.
+I was a little apprehensive about the Shostakovich on such a steaming afternoon.  You made it absolutely riveting, with all its prolix fascination and strangeness as well as introspective qualities.  I was as thrilled as the audience and found a joyous  release in joining the ovation.
+
+http://data.open.ac.uk/edtf/ontology/monthOfYear	http://reference.data.gov.uk/def/intervals/April
+http://purl.org/dc/terms/dateApproved	2017-04-26T13:23:38+00:00
+http://data.open.ac.uk/edtf/ontology/year	1879
+http://dbpedia.org/ontology/religion	http://dbpedia.org/resource/Christianity
+http://data.open.ac.uk/edtf/ontology/yearOfCentury	http://data.open.ac.uk/time/edtf/YearInCentury.00
+http://purl.org/NET/c4dm/event.owl#time	http://data.open.ac.uk/time/edtf/191u-uu-uu
+http://led.kmi.open.ac.uk/term/meta/initial_graph	http://led.kmi.open.ac.uk/user/5011Henning/claims
+http://dbpedia.org/ontology/writer	http://musicbrainz.org/artist/0e85eb79-1c05-44ba-827c-7b259a3d941a#_
+http://purl.org/dc/terms/language	urn:iso:std:iso:639:ed-3:eng
+http://led.kmi.open.ac.uk/term/pages	167
+http://purl.org/NET/c4dm/event.owl#agent	http://dbpedia.org/resource/Benjamin_Britten
+http://purl.org/ontology/mo/performer	http://musicbrainz.org/artist/a92954b0-586c-43e2-bd95-7db735ff47be#_
+http://purl.org/ontology/mo/composer	http://dbpedia.org/resource/Ignacy_Jan_Paderewski
+http://purl.org/ontology/mo/listener	http://data.open.ac.uk/led/agent/Barcelona+audience/1459355436638
+http://led.kmi.open.ac.uk/term/hasSourceType	http://led.kmi.open.ac.uk/term/source/type/epistolary
+http://purl.org/ontology/mo/instrument	http://dbpedia.org/resource/Cello
+http://data.open.ac.uk/edtf/ontology/dayOfMonth	http://data.open.ac.uk/time/edtf/DayOfMonth.18
+http://purl.org/ontology/bibo/pages	64
+http://purl.org/NET/c4dm/event.owl#place	http://dbpedia.org/resource/England
+http://xmlns.com/foaf/0.1/familyName	Barracks
+http://xmlns.com/foaf/0.1/givenName	Lady Isaiah
+http://led.kmi.open.ac.uk/term/has_social_status	urn:x-nrsuk:social:D
+http://purl.org/dc/terms/description	Bridgeton, Glasgow
+http://data.open.ac.uk/edtf/ontology/century	http://data.open.ac.uk/time/edtf/Century.19
+http://dbpedia.org/ontology/occupation	http://data.open.ac.uk/led/poet
+http://purl.org/dc/terms/isReferencedBy	https://archive.org/details/extractsofjourna03berr%252525252525252520
+http://schema.org/birthDate	http://reference.data.gov.uk/id/day/1774-02-24
+http://purl.org/ontology/bibo/status	http://purl.org/ontology/bibo/status/published
+http://schema.org/author	http://data.open.ac.uk/led/person/Sergey+Prokofiev/1450307447086
+http://purl.org/ontology/bibo/uri	http://www.grandtour.amdigital.co.uk.libezproxy.open.ac.uk/Contents/DocumentDetailsSearch.aspx%25253Fdocumentid%25253D88882%252526prevPos%25253D88882%252526previous%25253D0%252526pi%25253D1
+http://purl.org/ontology/bibo/translator	http://data.open.ac.uk/led/agent/Anthony+Phillips/1421013873158
+http://www.w3.org/2000/01/rdf-schema#comment	Henry served with 1/5th (Territorial) Battalion, The Gloucestershire Regiment.
+http://xmlns.com/foaf/0.1/nick	Lajos Haynald
+http://schema.org/deathDate	http://reference.data.gov.uk/id/day/1841-11-25
+http://schema.org/birthPlace	http://dbpedia.org/resource/The_Hague
+http://schema.org/nationality	http://dbpedia.org/resource/United_Kingdom
+http://data.open.ac.uk/edtf/ontology/timeOfDay	http://data.open.ac.uk/time/edtf/TimeOfDay.17:45:00
+http://led.kmi.open.ac.uk/term/pages_manuscript	131
+http://www.w3.org/2006/time#hasBeginning	http://reference.data.gov.uk/id/gregorian-instant/1913-03-11T17:45:00
+http://purl.org/dc/terms/issued	http://data.open.ac.uk/time/edtf/1970-uu-uu
+http://purl.org/dc/terms/date	2018-06-19
+http://purl.org/ontology/bibo/volume	21
+http://purl.org/ontology/bibo/place	http://dbpedia.org/resource/London
+http://purl.org/dc/terms/publisher	http://bnb.data.bl.uk/id/agent/PenguinBooks
+http://xmlns.com/foaf/0.1/name	7th Surrey Volunteers
+http://www.w3.org/2006/time#hasDurationDescription	http://data.open.ac.uk/time/duration/PT1H30M
+http://www.opengis.net/ont/geosparql#sfIntersects	http://dbpedia.org/resource/Bromsgrove
+http://www.w3.org/2006/time#hasEnd	http://data.open.ac.uk/time/edtf/1799-uu-uu
+http://www.w3.org/2002/07/owl#sameAs	http://bnb.data.bl.uk/id/person/GlazunovAleksandr1865-1936
+http://schema.org/deathPlace	http://dbpedia.org/resource/Birmingham
+http://purl.org/ontology/bibo/number	LJHB-02/039
+http://purl.org/ontology/bibo/editor	http://bnb.data.bl.uk/id/person/PhillipsAnthony1936Dec19-
+http://www.co-ode.org/roberts/upper.owl#has_initial_physical_location	http://data.open.ac.uk/led/place/46bf8e2b537b205655a49f536a4bf24d
+http://xmlns.com/foaf/0.1/title	Lady.
+http://purl.org/ontology/bibo/isbn	1578069017
+http://www.w3.org/2006/time#minutes	50
+http://led.kmi.open.ac.uk/term/in_collection	Glasgow City Archives
+http://led.kmi.open.ac.uk/term/meta/acknowledgement	Permission granted by Glasgow City Archives to include this extract in the database.  
+http://www.co-ode.org/roberts/upper.owl#has_final_physical_location	http://dbpedia.org/resource/Constantinople
+http://www.w3.org/2006/time#hours	1
+http://purl.org/ontology/bibo/issue	468
+http://www.w3.org/2004/02/skos/core#prefLabel	Louis Spohr
+http://www.w3.org/2004/02/skos/core#altLabel	Mozart
