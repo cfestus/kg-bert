@@ -180,54 +180,101 @@
 # f.close()
 
 # Creating dev,train, and test .tsv
+# import os
+# import random
+# import rdflib
+# #import html5lib
+
+# # create the dev.tsv, train.tsv and test.tsv files
+# dev_file = open("dev.tsv", "w")
+# train_file = open("train.tsv", "w")
+# test_file = open("test.tsv", "w")
+
+# # Read the led23.nt file
+# graph = rdflib.Graph()
+# result = graph.parse("led23.nt", format="nt")
+# triples = list(graph)
+
+# # Ensure the list index is not out of range
+# if len(triples) == 0:
+#     print("No triples found in led23.nt")
+# else:
+#     # Split triples into 70% for train.tsv, 15% for dev.tsv and 15% for test.tsv
+#     random.shuffle(triples)
+#     split_1 = int(len(triples) * 0.7)
+#     split_2 = int(len(triples) * 0.15) + split_1
+
+#     train_triples = triples[:split_1]
+#     dev_triples = triples[split_1:split_2]
+#     test_triples = triples[split_2:]
+
+#     # Write the triples to their respective files
+#     for triple in train_triples:
+#         s = triple[0].n3()
+#         p = triple[1].n3()
+#         o = triple[2].n3()
+#         train_file.write(f"{s}\t{p}\t{o}\n")
+
+#     for triple in dev_triples:
+#         s = triple[0].n3()
+#         p = triple[1].n3()
+#         o = triple[2].n3()
+#         dev_file.write(f"{s}\t{p}\t{o}\n")
+
+#     for triple in test_triples:
+#         s = triple[0].n3()
+#         p = triple[1].n3()
+#         o = triple[2].n3()
+#         test_file.write(f"{s}\t{p}\t{o}\n")
+
+# # Close the files
+# dev_file.close()
+# train_file.close()
+# test_file.close()
+
+
+# ^IMPORTANT FOR ENTITY2TEXT.TXT (NOT POPULATING THE FILE)
+
 import os
-import random
-import rdflib
-#import html5lib
+from SPARQLWrapper import SPARQLWrapper, N3
 
-# create the dev.tsv, train.tsv and test.tsv files
-dev_file = open("dev.tsv", "w")
-train_file = open("train.tsv", "w")
-test_file = open("test.tsv", "w")
+# Define the SPARQL endpoint and set a timeout
+sparql = SPARQLWrapper("https://data.open.ac.uk/index.php?path=sparql")
+sparql.setTimeout(30)
 
-# Read the led23.nt file
-graph = rdflib.Graph()
-result = graph.parse("led23.nt", format="nt")
-triples = list(graph)
+# Load entities from entities.txt
 
-# Ensure the list index is not out of range
-if len(triples) == 0:
-    print("No triples found in led23.nt")
-else:
-    # Split triples into 70% for train.tsv, 15% for dev.tsv and 15% for test.tsv
-    random.shuffle(triples)
-    split_1 = int(len(triples) * 0.7)
-    split_2 = int(len(triples) * 0.15) + split_1
+entities = []
+try:
+    with open("entities.txt", "r") as f:
+        entities = f.readlines()
+        entities = [entity.strip() for entity in entities]
+except IOError as e:
+    print("Error opening file entities.txt: ", e)
+    exit(1)
 
-    train_triples = triples[:split_1]
-    dev_triples = triples[split_1:split_2]
-    test_triples = triples[split_2:]
+# Query the names of the entities using SPARQL
+result = {}
+for entity in entities:
+    query = f"""
+    PREFIX rdfs: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT ?name
+    WHERE {{
+        <{entity}> rdfs:label ?name .
+    }}
+    """
+    sparql.setQuery(query)
+    sparql.setReturnFormat(N3)
+    try:
+        response = sparql.query().convert()
+        for row in response["results"]["bindings"]:
+            result[entity] = row["name"]["value"]
+    except:
+        # Log the error and continue to the next entity
+        print(f"Error querying entity: {entity}")
 
-    # Write the triples to their respective files
-    for triple in train_triples:
-        s = triple[0].n3()
-        p = triple[1].n3()
-        o = triple[2].n3()
-        train_file.write(f"{s}\t{p}\t{o}\n")
-
-    for triple in dev_triples:
-        s = triple[0].n3()
-        p = triple[1].n3()
-        o = triple[2].n3()
-        dev_file.write(f"{s}\t{p}\t{o}\n")
-
-    for triple in test_triples:
-        s = triple[0].n3()
-        p = triple[1].n3()
-        o = triple[2].n3()
-        test_file.write(f"{s}\t{p}\t{o}\n")
-
-# Close the files
-dev_file.close()
-train_file.close()
-test_file.close()
+# Write the entity names to entity2text.txt
+with open("entity2text.txt", "w") as f:
+    for entity, name in result.items():
+        if name:
+            f.write(f"{entity}\t{name}\n")
