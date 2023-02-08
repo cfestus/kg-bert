@@ -1,280 +1,162 @@
-# python code that will iterate over led23.nt file and create the files need for the KGC task
 
-
-# creating entities.txt
-# import rdflib
-# import html5lib
-# import os
-
-# g = rdflib.Graph()
-
-# #parse the led23.nt file
-# result = g.parse("led23.nt", format="nt")
-
-# #create a set to store unique entities
-# entities = set()
-
-# #iterate over all triples in the graph
-# for s, p, o in g:
-#     try:
-#         #add the subject to the set of entities
-#         entities.add(s)
-#         #add the object to the set of entities
-#         # entities.add(o)
-#     except html5lib.html5parser.ParseError:
-#         #skip the comment nodes as they can cause errors
-#         continue
-#     except IndexError:
-#         #skip the triple if the list index is out of range
-#         continue
-
-# #open the entities.txt file in write mode
-# with open("entities.txt", "w") as f:
-#     #write each entity in a new line in the entities.txt file
-#     for entity in entities:
-#         f.write("%s\n" % entity)
-
-# #close the entities.txt file
-# f.close()
-
-# creating entity2text
-# import rdflib
-# import html5lib
-# import os
-
-# g = rdflib.Graph()
-
-# #parse the led23.nt file
-# result = g.parse("led23.nt", format="nt")
-
-# #create a dictionary to store entities and their names
-# entity2text = {}
-
-# #open the entity2text.txt file in write mode
-# with open("entity2text.txt", "w") as f:
-#     #iterate over all triples in the graph
-#     for s, p, o in g:
-#         try:
-#             #check if the subject and object are not already in the dictionary
-#             if s not in entity2text:
-#                 entity2text[s] = s.toPython()
-#             # if o not in entity2text:
-#             #     entity2text[o] = o.toPython()
-#         except html5lib.html5parser.ParseError:
-#             #skip the comment nodes as they can cause errors
-#             continue
-#         except IndexError:
-#             #skip the triple if the list index is out of range
-#             continue
-
-#     #write all entities and their names in the entity2text.txt file
-#     for entity, name in entity2text.items():
-#         f.write("%s\t%s\n" % (entity, name))
-
-# #close the entity2text.txt file
-# f.close()
-
-# entity2txtlong
-# import os
-# import rdflib
-
-# # create the entity2txtlong.txt file
-# entity_file = open("entity2txtlong.txt", "w")
-
-# # Read the led23.nt file
-# graph = rdflib.Graph()
-# result = graph.parse("led23.nt", format="nt")
-# triples = list(graph)
-
-# # Ensure the list index is not out of range
-# if len(triples) == 0:
-#     print("No triples found in led23.nt")
-# else:
-#     entities = {}
-
-#     # Extract the entities and their descriptions
-#     for triple in triples:
-#         subject = str(triple[0])
-#         predicate = str(triple[1])
-#         obj = str(triple[2])
-
-#         if predicate == "http://www.w3.org/2000/01/rdf-schema#comment":
-#             entities[subject] = obj
-
-#     # Write the entities and their descriptions to the file
-#     for entity, description in entities.items():
-#         entity_file.write(f"{entity}\t{description}\n")
-
-# # Close the file
-# entity_file.close()
-
-
-# Relation2text
-# import rdflib
-# import html5lib
-# import os
-
-# g = rdflib.Graph()
-
-# # parse the led23.nt file
-# result = g.parse("led23.nt", format="nt")
-
-# # create a dictionary to store relations and their attributes
-# relation2text = {}
-
-# # iterate through all the triples in the graph
-# for subject, predicate, obj in g:
-#     try:
-#         # check if the predicate is not already in the dictionary
-#         if predicate not in relation2text:
-#             # add the predicate and its attribute to the dictionary
-#             relation2text[predicate] = obj
-#     except html5lib.html5parser.ParseError:
-#         # skip the comment nodes as they can cause errors
-#         continue
-#     except IndexError:
-#         # skip the triple if the list index is out of range
-#         continue
-
-# # open the relation2text.txt file in write mode
-# with open("relation2text.txt", "w") as f:
-#     # write all relations and their attributes in the relation2text.txt file
-#     for relation, attribute in relation2text.items():
-#         f.write("%s\t%s\n" % (relation, attribute))
-
-# # close the relation2text.txt file
-# f.close()
-
-# Relation
-# import rdflib
-# import html5lib
-# import os
-
-# g = rdflib.Graph()
-
-# #parse the led23.nt file
-# result = g.parse("led23.nt", format="nt")
-
-# #create a set to store all the relations found in led23.nt
-# relations = set()
-
-# #iterate through all the triples in the graph
-# for s, p, o in g:
-#     try:
-#         #add the predicate (relation) to the set
-#         relations.add(p)
-#     except html5lib.html5parser.ParseError:
-#         #skip the comment nodes as they can cause errors
-#         continue
-#     except IndexError:
-#         #skip the triple if the list index is out of range
-#         continue
-
-# #open the relations.txt file in write mode
-# with open("relations.txt", "w") as f:
-#     #write all the relations in the relations.txt file
-#     for relation in relations:
-#         f.write("%s\n" % relation)
-
-# #close the relations.txt file
-# f.close()
-
-# Creating dev,train, and test .tsv
-# import os
-# import random
-# import rdflib
-# #import html5lib
-
-# # create the dev.tsv, train.tsv and test.tsv files
-# dev_file = open("dev.tsv", "w")
-# train_file = open("train.tsv", "w")
-# test_file = open("test.tsv", "w")
-
-# # Read the led23.nt file
-# graph = rdflib.Graph()
-# result = graph.parse("led23.nt", format="nt")
-# triples = list(graph)
-
-# # Ensure the list index is not out of range
-# if len(triples) == 0:
-#     print("No triples found in led23.nt")
-# else:
-#     # Split triples into 70% for train.tsv, 15% for dev.tsv and 15% for test.tsv
-#     random.shuffle(triples)
-#     split_1 = int(len(triples) * 0.7)
-#     split_2 = int(len(triples) * 0.15) + split_1
-
-#     train_triples = triples[:split_1]
-#     dev_triples = triples[split_1:split_2]
-#     test_triples = triples[split_2:]
-
-#     # Write the triples to their respective files
-#     for triple in train_triples:
-#         s = triple[0].n3()
-#         p = triple[1].n3()
-#         o = triple[2].n3()
-#         train_file.write(f"{s}\t{p}\t{o}\n")
-
-#     for triple in dev_triples:
-#         s = triple[0].n3()
-#         p = triple[1].n3()
-#         o = triple[2].n3()
-#         dev_file.write(f"{s}\t{p}\t{o}\n")
-
-#     for triple in test_triples:
-#         s = triple[0].n3()
-#         p = triple[1].n3()
-#         o = triple[2].n3()
-#         test_file.write(f"{s}\t{p}\t{o}\n")
-
-# # Close the files
-# dev_file.close()
-# train_file.close()
-# test_file.close()
-
-
-# ^IMPORTANT FOR ENTITY2TEXT.TXT (NOT POPULATING THE FILE)
-
+import rdflib
 import os
-from SPARQLWrapper import SPARQLWrapper, N3
+import random
 
-# Define the SPARQL endpoint and set a timeout
-sparql = SPARQLWrapper("https://data.open.ac.uk/index.php?path=sparql")
-sparql.setTimeout(30)
+# Function that uses RDFlib and OS to remove comment nodes such as "__", "--", and "#" from the triples in a file named "led23.nt", then delete the original file and rename the new file to the original file name
 
-# Load entities from entities.txt
 
-entities = []
-try:
-    with open("entities.txt", "r") as f:
-        entities = f.readlines()
-        entities = [entity.strip() for entity in entities]
-except IOError as e:
-    print("Error opening file entities.txt: ", e)
-    exit(1)
+def remove_comments(filename):
+    g = rdflib.Graph()
+    g.parse(filename, format='nt')
+    triples = [(s, o, p) for s, o, p in g if not (s.startswith('--') or o.startswith('--') or p.startswith('--') or
+                                                  s.startswith("--") or o.startswith("--") or p.startswith("--") or
+                                                  s.startswith("#") or o.startswith("#") or p.startswith("#"))]
+    new_filename = filename + "_processed"
+    with open(new_filename, "w") as file:
+        for s, o, p in triples:
+            file.write(f"{s} {o} {p}\n")
+    os.remove(filename)
+    os.rename(new_filename, filename)
 
-# Query the names of the entities using SPARQL
-result = {}
-for entity in entities:
-    query = f"""
-    PREFIX rdfs: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    SELECT ?name
-    WHERE {{
-        <{entity}> rdfs:label ?name .
-    }}
-    """
-    sparql.setQuery(query)
-    sparql.setReturnFormat(N3)
-    try:
-        response = sparql.query().convert()
-        for row in response["results"]["bindings"]:
-            result[entity] = row["name"]["value"]
-    except:
-        # Log the error and continue to the next entity
-        print(f"Error querying entity: {entity}")
 
-# Write the entity names to entity2text.txt
-with open("entity2text.txt", "w") as f:
-    for entity, name in result.items():
-        if name:
-            f.write(f"{entity}\t{name}\n")
+# Function that uses RDFlib and OS to remove literals from the triples in a file named "led23.nt" and convert them to "s", "o", "p", then delete the original file and rename the new file to the original file name
+
+def remove_literals(filename):
+    g = rdflib.Graph()
+    g.parse(filename, format='nt')
+    triples = [(s.replace("l", "s").replace("e", "o").replace("d", "p"),
+                o.replace("l", "s").replace("e", "o").replace("d", "p"),
+                p.replace("l", "s").replace("e", "o").replace("d", "p"))
+               for s, o, p in g]
+    new_filename = filename + "_processed"
+    with open(new_filename, "w") as file:
+        for s, o, p in triples:
+            file.write(f"{s} {o} {p}\n")
+    os.remove(filename)
+    os.rename(new_filename, filename)
+
+
+# Function to create dev, train and test datasets
+
+
+def split_triples(filename):
+    # create the dev.tsv, train.tsv and test.tsv files
+    dev_file = open("dev.tsv", "w")
+    train_file = open("train.tsv", "w")
+    test_file = open("test.tsv", "w")
+
+    # Read the led23.nt file
+    graph = rdflib.Graph()
+    result = graph.parse(filename, format="nt")
+    triples = list(graph)
+
+    # Ensure the list index is not out of range
+    if len(triples) == 0:
+        print("No triples found in led23.nt")
+    else:
+        # Split triples into 70% for train.tsv, 15% for dev.tsv and 15% for test.tsv
+        random.shuffle(triples)
+        split_1 = int(len(triples) * 0.7)
+        split_2 = int(len(triples) * 0.15) + split_1
+
+        train_triples = triples[:split_1]
+        dev_triples = triples[split_1:split_2]
+        test_triples = triples[split_2:]
+
+        # Write the triples to their respective files
+        for triple in train_triples:
+            s = triple[0].n3()
+            p = triple[1].n3()
+            o = triple[2].n3()
+            train_file.write(f"{s}\t{p}\t{o}\n")
+
+        for triple in dev_triples:
+            s = triple[0].n3()
+            p = triple[1].n3()
+            o = triple[2].n3()
+            dev_file.write(f"{s}\t{p}\t{o}\n")
+
+        for triple in test_triples:
+            s = triple[0].n3()
+            p = triple[1].n3()
+            o = triple[2].n3()
+            test_file.write(f"{s}\t{p}\t{o}\n")
+
+    # Close the files
+    dev_file.close()
+    train_file.close()
+    test_file.close()
+
+
+# Function to create entity.txt and relations.txt
+
+
+def create_entities_and_relations_files():
+    # Read the led23.nt file
+    graph = rdflib.Graph()
+    result = graph.parse("led23.nt", format="nt")
+
+    # Get all the entities and relations in led23.nt
+    entities = set()
+    relations = set()
+    for s, p, o in graph:
+        entities.add(s.n3())
+        relations.add(p.n3())
+        entities.add(o.n3())
+
+    # Write the entities and relations to their respective files
+    with open("entities.txt", "w") as entities_file:
+        for entity in entities:
+            entities_file.write(f"{entity}\n")
+
+    with open("relations.txt", "w") as relations_file:
+        for relation in relations:
+            relations_file.write(f"{relation}\n")
+
+
+# Create the entity2text.txt and relation2text.txt
+def create_entity2text_and_relation2text_files():
+    # Read the led23.nt file
+    graph = rdflib.Graph()
+    result = graph.parse("led23.nt", format="nt")
+
+    # Get all the entities and relations in led23.nt
+    entities = set()
+    relations = set()
+    entity_descriptions = {}
+    relation_descriptions = {}
+    for s, p, o in graph:
+        entities.add(s)
+        relations.add(p)
+        entities.add(o)
+
+        # Get the descriptions for the entities
+        if (s, rdflib.namespace.RDFS.label, None) in graph:
+            entity_descriptions[s] = graph.value(
+                s, rdflib.namespace.RDFS.label).value
+
+        # Get the descriptions for the relations
+        if (p, rdflib.namespace.RDFS.label, None) in graph:
+            relation_descriptions[p] = graph.value(
+                p, rdflib.namespace.RDFS.label).value
+
+    # Write the entities and their descriptions to entity2text.txt
+    with open("entity2text.txt", "w") as entity2text_file:
+        for entity in entities:
+            description = entity_descriptions.get(entity, "")
+            entity2text_file.write(f"{entity}\t{description}\n")
+
+    # Write the relations and their descriptions to relation2text.txt
+    with open("relation2text.txt", "w") as relation2text_file:
+        for relation in relations:
+            description = relation_descriptions.get(relation, "")
+            relation2text_file.write(f"{relation}\t{description}\n")
+
+
+if __name__ == "__main__":
+    remove_comments("led23.nt")
+    remove_literals("led23.nt")
+    split_triples("led23.nt")
+    create_entities_and_relations_files()
+    create_entity2text_and_relation2text_files()
