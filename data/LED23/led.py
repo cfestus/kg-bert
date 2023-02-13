@@ -20,16 +20,22 @@ def preprocess(filename):
 def remove_literals(filename):
     g = rdflib.Graph()
     g.parse(filename, format='nt')
-    triples = [(s.replace("l", "s").replace("e", "o").replace("d", "p"),
-                o.replace("l", "s").replace("e", "o").replace("d", "p"),
-                p.replace("l", "s").replace("e", "o").replace("d", "p"))
-               for s, o, p in g]
-    new_filename = filename + "_processed"
-    with open(new_filename, "w") as file:
-        for s, o, p in triples:
-            file.write(f"{s} {o} {p}\n")
-    os.remove(filename)
-    os.rename(new_filename, filename)
+    t = rdflib.Graph()
+    for s, p, o in g:
+        if type(o) is not rdflib.term.Literal:
+            t.add( (s, p, o) )
+    t.serialize(destination="led23-noliterals.nt",format="nt")
+
+    # triples = [(s.replace("l", "s").replace("e", "o").replace("d", "p"),
+    #             o.replace("l", "s").replace("e", "o").replace("d", "p"),
+    #             p.replace("l", "s").replace("e", "o").replace("d", "p"))
+    #            for s, o, p in g]
+    # new_filename = filename + "_processed"
+    # with open(new_filename, "w") as file:
+    #     for s, o, p in triples:
+    #         file.write(f"{s} {o} {p}\n")
+    # os.remove(filename)
+    # os.rename(new_filename, filename)
 
 
 # Function to create dev, train and test datasets
@@ -122,37 +128,38 @@ def create_entity2text_and_relation2text_files():
     entity_descriptions = {}
     relation_descriptions = {}
     for s, p, o in graph:
-        entities.add(s)
-        relations.add(p)
-        entities.add(o)
+        entities.add(s.n3())
+        relations.add(p.n3())
+        entities.add(o.n3())
 
         # Get the descriptions for the entities
         if (s, rdflib.namespace.RDFS.label, None) in graph:
-            entity_descriptions[s] = graph.value(
-                s, rdflib.namespace.RDFS.label).value
-
+            entity_desc = graph.value(s, rdflib.namespace.RDFS.label).value
+            entity_descriptions[s.n3()] = entity_desc
+            #print('entity description found:', s, entity_desc)
+        
         # Get the descriptions for the relations
         if (p, rdflib.namespace.RDFS.label, None) in graph:
-            relation_descriptions[p] = graph.value(
+            relation_descriptions[p.n3()] = graph.value(
                 p, rdflib.namespace.RDFS.label).value
 
     # Write the entities and their descriptions to entity2text.txt
     with open("entity2text.txt", "w") as entity2text_file:
         for entity in entities:
-            description = entity_descriptions.get(entity, "")
+            description = entity_descriptions.get(entity, str(entity))
             entity2text_file.write(f"{entity}\t{description}\n")
 
     # Write the relations and their descriptions to relation2text.txt
     with open("relation2text.txt", "w") as relation2text_file:
         for relation in relations:
-            description = relation_descriptions.get(relation, "")
+            description = relation_descriptions.get(relation, str(relation))
             relation2text_file.write(f"{relation}\t{description}\n")
 
 
 if __name__ == "__main__":
     filename = "led23.nt"
-    preprocess(filename)
+    # preprocess(filename)
     # remove_literals("led23.nt")
     # split_triples("led23.nt")
     # create_entities_and_relations_files()
-    # create_entity2text_and_relation2text_files()
+    create_entity2text_and_relation2text_files()
