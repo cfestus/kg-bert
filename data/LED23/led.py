@@ -3,21 +3,16 @@ import rdflib
 import os
 import random
 
-# Function that uses RDFlib and OS to remove comment nodes such as "__", "--", and "#" from the triples in a file named "led23.nt", then delete the original file and rename the new file to the original file name
+# Function that replaces "__" with ""
 
 
-def remove_comments(filename):
-    g = rdflib.Graph()
-    g.parse(filename, format='nt')
-    triples = [(s, o, p) for s, o, p in g if not (s.startswith('--') or o.startswith('--') or p.startswith('--') or
-                                                  s.startswith("--") or o.startswith("--") or p.startswith("--") or
-                                                  s.startswith("#") or o.startswith("#") or p.startswith("#"))]
-    new_filename = filename + "_processed"
-    with open(new_filename, "w") as file:
-        for s, o, p in triples:
-            file.write(f"{s} {o} {p}\n")
-    os.remove(filename)
-    os.rename(new_filename, filename)
+def preprocess(filename):
+    with open(filename, "r") as file:
+        content = file.read()
+        content = content.replace("--", "")
+
+    with open(filename, "w") as file:
+        file.write(content)
 
 
 # Function that uses RDFlib and OS to remove literals from the triples in a file named "led23.nt" and convert them to "s", "o", "p", then delete the original file and rename the new file to the original file name
@@ -155,8 +150,9 @@ def create_entity2text_and_relation2text_files():
 
 
 if __name__ == "__main__":
-    remove_comments("led23.nt")
-    remove_literals("led23.nt")
-    split_triples("led23.nt")
-    create_entities_and_relations_files()
-    create_entity2text_and_relation2text_files()
+    filename = "led23.nt"
+    preprocess(filename)
+    # remove_literals("led23.nt")
+    # split_triples("led23.nt")
+    # create_entities_and_relations_files()
+    # create_entity2text_and_relation2text_files()
