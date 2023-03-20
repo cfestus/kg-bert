@@ -3,7 +3,7 @@ import rdflib
 import os
 import random
 
-# Function that replaces "__" with ""
+# Function that replaces comment notes, "__" with ""
 
 
 def preprocess(filename):
@@ -15,7 +15,7 @@ def preprocess(filename):
         file.write(content)
 
 
-# Function that uses RDFlib and OS to remove literals from the triples in a file named "led23.nt" and convert them to "s", "o", "p", then delete the original file and rename the new file to the original file name
+# Function that remove literals from the triples in a file named "led23.nt" and convert them to "s", "p", "o", then delete the original file and rename the new file to the original file name
 
 def remove_literals(filename):
     g = rdflib.Graph()
@@ -23,19 +23,8 @@ def remove_literals(filename):
     t = rdflib.Graph()
     for s, p, o in g:
         if type(o) is not rdflib.term.Literal:
-            t.add( (s, p, o) )
-    t.serialize(destination="led23-noliterals.nt",format="nt")
-
-    # triples = [(s.replace("l", "s").replace("e", "o").replace("d", "p"),
-    #             o.replace("l", "s").replace("e", "o").replace("d", "p"),
-    #             p.replace("l", "s").replace("e", "o").replace("d", "p"))
-    #            for s, o, p in g]
-    # new_filename = filename + "_processed"
-    # with open(new_filename, "w") as file:
-    #     for s, o, p in triples:
-    #         file.write(f"{s} {o} {p}\n")
-    # os.remove(filename)
-    # os.rename(new_filename, filename)
+            t.add((s, p, o))
+    t.serialize(destination="led23.nt", format="nt")
 
 
 # Function to create dev, train and test datasets
@@ -70,19 +59,19 @@ def split_triples(filename):
             s = triple[0].n3()
             p = triple[1].n3()
             o = triple[2].n3()
-            train_file.write(f"{s}\t{p}\t{o}\n")
+            train_file.write(s + "\t" + p + "\t" + o + "\n")
 
         for triple in dev_triples:
             s = triple[0].n3()
             p = triple[1].n3()
             o = triple[2].n3()
-            dev_file.write(f"{s}\t{p}\t{o}\n")
+            dev_file.write(s + "\t" + p + "\t" + o + "\n")
 
         for triple in test_triples:
             s = triple[0].n3()
             p = triple[1].n3()
             o = triple[2].n3()
-            test_file.write(f"{s}\t{p}\t{o}\n")
+            test_file.write(s + "\t" + p + "\t" + o + "\n")
 
     # Close the files
     dev_file.close()
@@ -91,7 +80,6 @@ def split_triples(filename):
 
 
 # Function to create entity.txt and relations.txt
-
 
 def create_entities_and_relations_files():
     # Read the led23.nt file
@@ -118,48 +106,51 @@ def create_entities_and_relations_files():
 
 # Create the entity2text.txt and relation2text.txt
 def create_entity2text_and_relation2text_files():
-    # Read the led23.nt file
+    # # Read the led23.nt file
     graph = rdflib.Graph()
     result = graph.parse("led23.nt", format="nt")
 
     # Get all the entities and relations in led23.nt
     entities = set()
     relations = set()
-    entity_descriptions = {}
-    relation_descriptions = {}
+    entity_ids = {}
+    relation_ids = {}
     for s, p, o in graph:
-        entities.add(s.n3())
-        relations.add(p.n3())
-        entities.add(o.n3())
+        s_str = s.n3()
+        p_str = p.n3()
+        o_str = o.n3()
+        entities.add(s_str)
+        relations.add(p_str)
+        entities.add(o_str)
 
-        # Get the descriptions for the entities
-        if (s, rdflib.namespace.RDFS.label, None) in graph:
-            entity_desc = graph.value(s, rdflib.namespace.RDFS.label).value
-            entity_descriptions[s.n3()] = entity_desc
-            #print('entity description found:', s, entity_desc)
-        
-        # Get the descriptions for the relations
-        if (p, rdflib.namespace.RDFS.label, None) in graph:
-            relation_descriptions[p.n3()] = graph.value(
-                p, rdflib.namespace.RDFS.label).value
+        # Get the unique identifiers for the entities
+        if s_str not in entity_ids:
+            entity_ids[s_str] = str(s).split("/")[-1]
+        if o_str not in entity_ids:
+            entity_ids[o_str] = str(o).split("/")[-1]
 
-    # Write the entities and their descriptions to entity2text.txt
+        # Get the unique identifiers for the relations
+        if p_str not in relation_ids:
+            relation_ids[p_str] = str(p).split("/")[-1]
+
+    # Write the entities and their unique identifiers to entity2text.txt
     with open("entity2text.txt", "w") as entity2text_file:
         for entity in entities:
-            description = entity_descriptions.get(entity, str(entity))
-            entity2text_file.write(f"{entity}\t{description}\n")
+            entity_id = entity_ids.get(entity, entity)
+            entity2text_file.write(f"{entity}\t{entity_id.split('/')[-1]}\n")
 
-    # Write the relations and their descriptions to relation2text.txt
+    # Write the relations and their unique identifiers to relation2text.txt
     with open("relation2text.txt", "w") as relation2text_file:
         for relation in relations:
-            description = relation_descriptions.get(relation, str(relation))
-            relation2text_file.write(f"{relation}\t{description}\n")
+            relation_id = relation_ids.get(relation, relation)
+            relation2text_file.write(
+                f"{relation}\t{relation_id.split('/')[-1]}\n")
 
 
 if __name__ == "__main__":
     filename = "led23.nt"
     # preprocess(filename)
-    # remove_literals("led23.nt")
-    # split_triples("led23.nt")
+    # remove_literals(filename)
+    # split_triples(filename)
     # create_entities_and_relations_files()
     create_entity2text_and_relation2text_files()
