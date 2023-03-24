@@ -1,7 +1,7 @@
-
 import rdflib
 import os
 import random
+import hashlib
 
 # Function that replaces comment notes, "__" with ""
 
@@ -15,14 +15,50 @@ def preprocess(filename):
         file.write(content)
 
 
-# Function that remove literals from the triples in a file named "led23.nt" and convert them to "s", "p", "o", then delete the original file and rename the new file to the original file name
+# Function that hash literals and urn: from the triples in a file named "led23.nt" and convert them to "s", "p", "o", then delete the original file and rename the new file to the original file name
 
-def remove_literals(filename):
+def hash_literals(filename):
     g = rdflib.Graph()
     g.parse(filename, format='nt')
     t = rdflib.Graph()
     for s, p, o in g:
-        if type(o) is not rdflib.term.Literal:
+        if isinstance(o, rdflib.term.Literal) or str(o).startswith('urn:'):
+            hash_value = hashlib.shake_128(str(type(o)).encode(
+                'UTF-8') + str(o).encode('UTF-8')).hexdigest(13)
+            o_uri = rdflib.URIRef(f"http://led.kmi.open.ac.uk/23/{hash_value}")
+            t.add((s, p, o_uri))
+        else:
+            t.add((s, p, o))
+    t.serialize(destination="led23.nt", format="nt")
+
+# Function to hash triples that has more that 510 tokens
+
+
+def hashing_longtriples(filename):
+    g = rdflib.Graph()
+    g.parse(filename, format='nt')
+    t = rdflib.Graph()
+    for s, p, o in g:
+        if len(s) > 150:
+            s_hash = hashlib.shake_128(str(type(s)).encode(
+                'UTF-8') + str(s).encode('UTF-8')).hexdigest(13)
+            s_uri = rdflib.URIRef(f"http://led.kmi.open.ac.uk/24/{s_hash}")
+            t.add((s_uri, p, o))
+        else:
+            t.add((s, p, o))
+        if len(p) > 150:
+            p_hash = hashlib.shake_128(str(type(p)).encode(
+                'UTF-8') + str(p).encode('UTF-8')).hexdigest(13)
+            p_uri = rdflib.URIRef(f"http://led.kmi.open.ac.uk/24/{p_hash}")
+            t.add((s, p_uri, o))
+        else:
+            t.add((s, p, o))
+        if len(o) > 150:
+            o_hash = hashlib.shake_128(str(type(o)).encode(
+                'UTF-8') + str(o).encode('UTF-8')).hexdigest(13)
+            o_uri = rdflib.URIRef(f"http://led.kmi.open.ac.uk/24/{o_hash}")
+            t.add((s, p, o_uri))
+        else:
             t.add((s, p, o))
     t.serialize(destination="led23.nt", format="nt")
 
@@ -123,11 +159,14 @@ def create_entity2text_and_relation2text_files():
         relations.add(p_str)
         entities.add(o_str)
 
-        # Get the unique identifiers for the entities
         if s_str not in entity_ids:
-            entity_ids[s_str] = str(s).split("/")[-1]
+            s_parts = str(s).split("/")
+            s_value = s_parts[-2] if s_parts[-1] == "" else s_parts[-1]
+            entity_ids[s_str] = s_value
         if o_str not in entity_ids:
-            entity_ids[o_str] = str(o).split("/")[-1]
+            o_parts = str(o).split("/")
+            o_value = o_parts[-2] if o_parts[-1] == "" else o_parts[-1]
+            entity_ids[o_str] = o_value
 
         # Get the unique identifiers for the relations
         if p_str not in relation_ids:
@@ -147,10 +186,15 @@ def create_entity2text_and_relation2text_files():
                 f"{relation}\t{relation_id.split('/')[-1]}\n")
 
 
-if __name__ == "__main__":
+def run_led23cleaning_process():
     filename = "led23.nt"
-    # preprocess(filename)
-    # remove_literals(filename)
-    # split_triples(filename)
-    # create_entities_and_relations_files()
+    preprocess(filename)
+    hash_literals(filename)
+    hashing_longtriples(filename)
+    split_triples(filename)
+    create_entities_and_relations_files()
     create_entity2text_and_relation2text_files()
+
+
+if __name__ == "__main__":
+    run_led23cleaning_process()
